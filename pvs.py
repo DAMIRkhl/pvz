@@ -1,7 +1,5 @@
 import arcade
-
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
+from constantu import *
 
 
 class PlantsCards(arcade.Sprite):
@@ -131,6 +129,7 @@ class FirstGame(arcade.Window):
         if (self.plantscardssunflower.left <= x <= self.plantscardssunflower.right) and (
                 self.plantscardssunflower.bottom <= y <= self.plantscardssunflower.top):
             print("sunflower")
+
     def cards_size(self, name, x, y, normalscale, pressscale):
         if (name.left <= x <= name.right) and (
                 name.bottom <= y <= name.top) \
@@ -149,7 +148,6 @@ class FirstGame(arcade.Window):
         self.cards_size(self.plantscardwallnut, x, y, 0.8, 0.7)
         self.cards_size(self.plantscardssunflower, x, y, 0.8, 0.7)
         self.cards_size(self.showel, x, y, 0.5, 0.4)
-
 
 
 window = FirstGame(SCREEN_WIDTH, SCREEN_HEIGHT)

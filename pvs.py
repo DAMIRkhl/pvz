@@ -1,34 +1,7 @@
 import arcade
 from constantu import *
-
-
-class PlantsCards(arcade.Sprite):
-    def __init__(self, x, image):
-        super().__init__(image, scale=0.8)
-        self.center_x = x
-        self.center_y = 555.55
-
-
-class Shop(arcade.Sprite):
-    def __init__(self):
-        super().__init__(
-            "graphics/Screen/4B51B958-6D47-454C-A3A7-EBB961F31138.jpg", scale=0.5)
-        self.center_x = 500
-        self.center_y = 555.55
-
-
-class Shoparrow(arcade.Sprite):
-    def __init__(self):
-        super().__init__("graphics/Items/1514151.webp", 0.15, angle=-90)
-        self.center_x = 500
-        self.center_y = 500
-
-
-class Start(arcade.Sprite):
-    def __init__(self):
-        super().__init__("graphics/Screen/StartButton.png")
-        self.center_x = 600
-        self.center_y = 400
+from Elements import *
+from plants import *
 
 
 class FirstGame(arcade.Window):
@@ -42,6 +15,7 @@ class FirstGame(arcade.Window):
         self.shop = True
         self.shoparrow = Shoparrow()
         self.houchodamou = Shop()
+        self.plants = arcade.SpriteList()
         self.plantscardspeashooter = PlantsCards(340, "graphics/Cards/card_peashooter.png")
 
         self.plantscardssunflower = PlantsCards(395, "graphics/Cards/card_sunflower.png")
@@ -59,6 +33,8 @@ class FirstGame(arcade.Window):
         self.plantscardcherrybomb = PlantsCards(725, "graphics/Cards/card_cherrybomb.png")
 
         self.showel = PlantsCards(795, "graphics/Cards/Shovel.webp")
+
+        self.hold = None
 
     def spawn(self):
         pass
@@ -82,6 +58,9 @@ class FirstGame(arcade.Window):
             self.plantscardjalapeno.draw()
             self.plantscardcherrybomb.draw()
             self.showel.draw()
+            self.plants.draw()
+            if self.hold is not None:
+                self.hold.draw()
 
     def shop_and_not_shop(self):
         if self.shop:
@@ -128,7 +107,9 @@ class FirstGame(arcade.Window):
             print("peashooter")
         if (self.plantscardssunflower.left <= x <= self.plantscardssunflower.right) and (
                 self.plantscardssunflower.bottom <= y <= self.plantscardssunflower.top):
-            print("sunflower")
+            self.hold = SunFlower()
+            self.hold.center_x = x
+            self.hold.center_y = y
 
     def cards_size(self, name, x, y, normalscale, pressscale):
         if (name.left <= x <= name.right) and (
@@ -148,6 +129,10 @@ class FirstGame(arcade.Window):
         self.cards_size(self.plantscardwallnut, x, y, 0.8, 0.7)
         self.cards_size(self.plantscardssunflower, x, y, 0.8, 0.7)
         self.cards_size(self.showel, x, y, 0.5, 0.4)
+
+        if self.hold is not None:
+            self.hold.center_x = x
+            self.hold.center_y = y
 
 
 window = FirstGame(SCREEN_WIDTH, SCREEN_HEIGHT)

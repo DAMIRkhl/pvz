@@ -91,7 +91,7 @@ class FirstGame(arcade.Window):
             self.showel.center_y = 48902375
 
     def update(self, delta_time: float):
-        pass
+        self.plants.update_animation()
 
     def on_mouse_press(self, x: int, y: int, button: int, modifiers: int):
         if (self.start_button.left <= x <= self.start_button.right) and (
@@ -99,7 +99,7 @@ class FirstGame(arcade.Window):
             self.main_menu = False
 
         if (self.shoparrow.left <= x <= self.shoparrow.right) and (self.shoparrow.bottom <= y <= self.shoparrow.top) \
-                and not self.main_menu:
+                and not self.main_menu and self.hold is None:
             self.shop = not self.shop
             self.shop_and_not_shop()
         if (self.plantscardspeashooter.left <= x <= self.plantscardspeashooter.right) and (
@@ -133,6 +133,12 @@ class FirstGame(arcade.Window):
         if self.hold is not None:
             self.hold.center_x = x
             self.hold.center_y = y
+
+    def on_mouse_release(self, x: int, y: int, button: int, modifiers: int):
+        if 169 <= x <= 688 and 36 <= y <= 496 and self.hold is not None:
+            self.hold.planting(x, y, row=0, column=0)
+            self.plants.append(self.hold)
+            self.hold = None
 
 
 window = FirstGame(SCREEN_WIDTH, SCREEN_HEIGHT)

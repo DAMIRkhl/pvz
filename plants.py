@@ -1,8 +1,9 @@
 import arcade
 from constantu import *
+from animatio import *
 
 
-class Plants(arcade.Sprite):
+class Plants(Animate):
     def __init__(self, image, HP, cost):
         super().__init__(image)
         self.HP = HP
@@ -23,3 +24,5 @@ class Plants(arcade.Sprite):
 class SunFlower(Plants):
     def __init__(self):
         super().__init__("graphics/Plants/SunFlower/SunFlower_0.png", 10, 50)
+        for i in range(18):
+            self.append_texture(arcade.load_texture(f"graphics/Plants/SunFlower/SunFlower_{i}.png"))
